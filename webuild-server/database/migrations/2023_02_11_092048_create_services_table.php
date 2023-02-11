@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->integer('warehouse_id');
+            $table->string('name')->unique();
+            $table->string('image_url');
+            $table->integer('minimum_charge_per_hour');
+            $table->string('description');
             $table->timestamps();
         });
     }

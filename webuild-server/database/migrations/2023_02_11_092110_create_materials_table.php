@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
+            $table->integer('warehouse_id');
+            $table->integer('category_id');
+            $table->string('name')->unique();
+            $table->integer('price_per_unit');
+            $table->integer('available_quantity');
+            $table->string('description');
             $table->timestamps();
         });
     }

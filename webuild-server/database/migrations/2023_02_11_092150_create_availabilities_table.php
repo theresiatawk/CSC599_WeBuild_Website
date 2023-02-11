@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('availabilities', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
+            $table->integer('item_id');
+            $table->string('date');
+            $table->string('start_time');
+            $table->string('end_time');
+            $table->boolean('is_booked');
             $table->timestamps();
         });
     }
