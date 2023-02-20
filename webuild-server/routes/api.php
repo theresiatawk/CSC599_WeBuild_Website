@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\WarehouseOwnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +17,17 @@ use App\Http\Controllers\AuthController;
 */
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix' => 'user'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
-}); 
+}, Route::group([
+    'middleware' => 'api',
+    'prefix' => 'warehouse'
+], function ($router) {
+    Route::post('/login', [WarehouseOwnerController::class, 'login']);
+    Route::post('/register', [WarehouseOwnerController::class, 'register']);
+})); 
