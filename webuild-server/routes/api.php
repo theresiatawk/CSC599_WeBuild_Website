@@ -24,10 +24,4 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
-}, Route::group([
-    'middleware' => 'api',
-    'prefix' => 'warehouse'
-], function ($router) {
-    Route::post('/login', [WarehouseOwnerController::class, 'login']);
-    Route::post('/register', [WarehouseOwnerController::class, 'register']);
-})); 
+});
