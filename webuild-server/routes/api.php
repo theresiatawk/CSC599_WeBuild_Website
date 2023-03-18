@@ -23,5 +23,7 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);  
+    Route::post('/editProfile/{user}', [AuthController::class, 'editProfile']);
+    Route::post('/{user}/password', [AuthController::class, 'updatePassword']);    
 });
