@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+        Schema::table('email_verifications', function (Blueprint $table) {
+        Schema::rename('email_verification', 'email_verifications');
+
         });
     }
 
@@ -27,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::table('email_verifications', function (Blueprint $table) {
+        Schema::rename('email_verifications', 'email_verification');
+        });
     }
 };

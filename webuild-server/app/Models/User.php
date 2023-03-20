@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, CanResetPassword
 {
     use HasFactory, Notifiable;
 
@@ -58,5 +59,9 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function emailVerifications(): HasMany
+    {
+        return $this->hasMany(EmailVerification::class);
     }
 }

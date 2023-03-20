@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\WarehouseOwnerController;
 
 /*
@@ -25,5 +26,8 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);  
     Route::post('/editProfile/{user}', [AuthController::class, 'editProfile']);
-    Route::post('/{user}/password', [AuthController::class, 'updatePassword']);    
+    Route::post('/{user}/password', [AuthController::class, 'updatePassword']); 
+    Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+    Route::get('/email/verify/{token}', [VerificationController::class, 'verify'])->name('verification.verify');
+    Route::get('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');  
 });

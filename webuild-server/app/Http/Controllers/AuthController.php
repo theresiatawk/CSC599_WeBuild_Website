@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 use App\Models\User;
 use Validator;
-
+use Illuminate\Support\Str;
+use App\Mail\EmailVerification;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -63,6 +66,16 @@ class AuthController extends Controller
         $user->phone_number = $request->phone_number;
         $user->adress = $request->adress;
         $user->user_type = $request->user_type;
+        $tokenn = $this->generateVerificationToken();
+        $user->save();
+        $user->emailVerifications()->create([
+            'token' => $tokenn,
+        ]);
+        $verification_url = 'http://127.0.0.1:8000/api/user/email/verify/'.$tokenn;
+        Mail::to($user)->send(new EmailVerification($verification_url));
+        return response()->json([
+            'message' => 'Successfully registered. Please check your email to verify your account.'
+        ], 201);
         if($user->save()){
             return response()->json([
                 'message' => 'User successfully registered',
@@ -166,4 +179,8 @@ class AuthController extends Controller
             'user' => auth()->user()
         ]);
     }
+    protected function generateVerificationToken(): string
+{
+    return Str::random(32);
+}
 }
