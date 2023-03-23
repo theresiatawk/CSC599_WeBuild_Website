@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use App\Notifications\CustomPasswordResetNotification;
 
-class User extends Authenticatable implements JWTSubject, CanResetPassword
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -63,5 +64,9 @@ class User extends Authenticatable implements JWTSubject, CanResetPassword
     public function emailVerifications(): HasMany
     {
         return $this->hasMany(EmailVerification::class);
+    }
+    public function sendPasswordResetNotification($token)
+    {
+    $this->notify(new CustomPasswordResetNotification($token));
     }
 }

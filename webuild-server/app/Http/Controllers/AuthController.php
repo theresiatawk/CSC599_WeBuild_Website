@@ -103,6 +103,7 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'User Successfully logged out']);
     }
+
     public function editProfile(Request $request, $user){
         $validator = Validator::make($request->all(), [
             'username' => 'sometimes|string|between:2,100|unique:users,username,'.$user,
@@ -112,7 +113,6 @@ class AuthController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
-
         }
         $user = User::find($user);
         if($request->username){
@@ -152,7 +152,10 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Password updated successfully.'], 200);
     }
-
+    public function resetPassword(Request $request)
+    {
+        // TODO: Implement password reset logic
+    }
     
     /**
      * Refresh a token.
@@ -172,15 +175,22 @@ class AuthController extends Controller
      */
     protected function createNewToken($token)
     {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
-        ]);
+        if (auth()->user()->email_verified != 0){
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+                'user' => auth()->user(),
+            ]);
+        }
+        else{
+            return response()->json([
+                'error' => 'Email verification is needed in order to be able to sign in'
+            ]);
+        }
     }
     protected function generateVerificationToken(): string
-{
+    {
     return Str::random(32);
-}
+    }
 }
