@@ -5,6 +5,7 @@ use App\Models\Material;
 use App\Models\MaterialCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 
 class MaterialController extends Controller
@@ -98,6 +99,24 @@ class MaterialController extends Controller
             }
             $material->category_id = $request->category_id;
         }
+        if ($request->hasFile('image')) {
+            // Only allow .jpg, .jpeg and .png file types.
+           $validate_img = Validator::make($request->all(), [
+               'image' => 'mimes:jpeg,jpg,png'
+           ]);
+           if($validate_img->fails()){
+               return response()->json([
+                   "error" => "Invalid file type."
+               ]);
+           }
+           $request->image->store('materials', 'public');
+           if($material->image_url !== 'images/WeBuild_Logo.png'){
+                $path = 'public/materials/' . $material->image_url;
+                if (Storage::exists($path)) {
+                    Storage::delete($path); 
+                }
+            }  
+        }
         if($request->material_name){
             $material->name = $request->material_name;
         }
@@ -109,6 +128,9 @@ class MaterialController extends Controller
         }
         if($request->material_description){
             $material->description = $request->material_description;
+        }
+        if($request->image){
+            $material->image_url = $request->image->hashName();
         }
         if($material->save()){
             return response()->json([
@@ -137,10 +159,28 @@ class MaterialController extends Controller
         if($accessed_material == null){
             return response()->json(['error' => 'Unauthorized. Cannot delete this material'], 403);
         }
-        $material->delete();
-        return response()->json([
-            'message' => 'Material deleted successfully'
-        ]);
+        if($material->image_url !== 'images/WeBuild_Logo.png'){
+            $path = 'public/materials/' . $material->image_url;
+            if (Storage::exists($path)) {
+                if (Storage::delete($path)) {
+                    if ($material->delete()) {
+                        return response()->json([
+                            'message' => 'Material deleted successfully with its corresponding image'
+                        ]);
+                    };
+                }
+            }  
+        }
+        if($material->delete()){
+            return response()->json([
+                'message' => 'Material deleted successfully'
+            ]);
+        }
+        else{
+            return response()->json([
+                'error' => 'Failed to delete the image successfuly'
+            ]);
+        }
     }
     public function getMaterials($warehouse_id, $category_id){
         if(!$warehouse_id){
