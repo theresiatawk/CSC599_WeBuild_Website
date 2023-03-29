@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('materials', function (Blueprint $table) {
+            $table->string('name')->change();
+            $table->string('price_per_unit')->change();
         });
     }
 
@@ -26,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::table('materials', function (Blueprint $table) {
+            //
+        });
     }
 };

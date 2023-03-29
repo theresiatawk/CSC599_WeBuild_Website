@@ -21,6 +21,14 @@ class CustomPasswordResetNotification extends Notification
     {
         $this->token = $token;
     }
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->line('You are receiving this email because we received a password reset request for your account.')
+            ->action('Reset Password', url(config('app.url').route('password.reset', $this->token, false)))
+            ->line('If you did not request a password reset, no further action is required.');
+    }
+
     /**
      * Get the notification's delivery channels.
      *
@@ -38,15 +46,6 @@ class CustomPasswordResetNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
-{
-    return (new MailMessage)
-        ->from('theresiatawkk@gmail.com', 'WEBUILD')
-        ->subject('WEBUILD Reset Password Notification')
-        ->line('You are receiving this email because we received a password reset request for your account.')
-        ->action('Reset Password', url(config('app.url').route('password.reset', $this->token, false)))
-        ->line('If you did not request a password reset, no further action is required.');
-}
 
     /**
      * Get the array representation of the notification.

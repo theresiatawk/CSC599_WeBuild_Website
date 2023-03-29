@@ -14,15 +14,13 @@ class CheckUserOwnership
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next)
-{
-    $user = $request->user();
-    $profileId = $request->route('user');
+    public function handle($request, Closure $next){
+        $user = $request->user();
+        $profileId = $request->route('user');
 
-    if ($user->user_type !== 'a' && $user->id != $profileId) {
-        abort(403, 'Unauthorized action.');
+        if ($user->user_type !== 'a' && $user->id != $profileId) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        return $next($request);
     }
-
-    return $next($request);
-}
 }

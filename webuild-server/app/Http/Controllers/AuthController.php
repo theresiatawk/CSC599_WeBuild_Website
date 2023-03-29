@@ -12,23 +12,11 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
-        $this->middleware('checkUserOwnership', ['except' => ['login', 'register', 'logout', 'userProfile']]);
     }
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function login(Request $request)
-    {
+
+    public function login(Request $request){
         $validator = Validator::make($request->all(), [
             'username' => 'required|string',
             'email' => 'required|email',
@@ -38,15 +26,11 @@ class AuthController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Incorrect username or password'], 401);
         }
         return $this->createNewToken($token);
     }
-    /**
-     * Register a User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|between:2,100|unique:users',
@@ -76,45 +60,35 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Successfully registered. Please check your email to verify your account.'
         ], 201);
-        if($user->save()){
-            return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user
-            ], 201);
-        }
     }
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function userProfile()
-    {
+
+    public function userProfile(){
         return response()->json(auth()->user());
     }
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
 
+    public function logout(){
+        auth()->logout();
         return response()->json(['message' => 'User Successfully logged out']);
     }
 
-    public function editProfile(Request $request, $user){
+    public function editProfile(Request $request){
+        $user_id = auth()->user()->id;
         $validator = Validator::make($request->all(), [
-            'username' => 'sometimes|string|between:2,100|unique:users,username,'.$user,
-            'email' => 'sometimes|string|email|max:100|unique:users,email,'.$user,
+            'username' => 'sometimes|string|between:2,100|unique:users,username,'.$user_id,
+            'email' => 'sometimes|string|email|max:100|unique:users,email,'.$user_id,
             'phone_number' => 'sometimes|numeric|min:8',
             'adress' => 'sometimes|string',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-        $user = User::find($user);
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        if($user == null){
+            return response()->json([
+                'error' => 'User not found. Invalid User Id.'
+            ], 404);
+        }
         if($request->username){
             $user->username = $request->username;
         }
@@ -134,6 +108,7 @@ class AuthController extends Controller
             ], 201);
         }
     }
+
     public function updatePassword(Request $request, $user){
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
@@ -148,33 +123,51 @@ class AuthController extends Controller
         }
 
         $user->password = bcrypt($request->new_password);
-        $user->save();
-
-        return response()->json(['message' => 'Password updated successfully.'], 200);
+        if($user->save()){
+            return response()->json(['message' => 'Password updated successfully.'], 200);
+        }
+        else{
+            return response()->json(['error' => 'Failed to update password, try again later.'], 200);
+        }
     }
-    public function resetPassword(Request $request)
-    {
+
+    public function resetPassword(Request $request){
         // TODO: Implement password reset logic
     }
-    
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh() 
-    {
+
+    public function getWarehouses(){
+        $warehouses = User::where("user_type", 'w')
+                            ->get();
+        if(count($warehouses) == 0){
+            return response()->json([
+                'error' => 'No Warehouses registered yet'
+            ]);
+        }
+        return response()->json([
+            'message' => 'Available',
+            'Warehouses' => $warehouses
+        ]); 
+    }
+
+    public function getUsers(){
+        $users = User::where("user_type", 'u')
+                            ->get();
+        if(count($users) == 0){
+            return response()->json([
+                'error' => 'No Users registered yet'
+            ]);
+        }
+        return response()->json([
+            'message' => 'Available',
+            'Users' => $users
+        ]); 
+    }
+
+    public function refresh() {
         return $this->createNewToken(auth()->refresh());
     }
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function createNewToken($token)
-    {
+
+    protected function createNewToken($token){
         if (auth()->user()->email_verified != 0){
             return response()->json([
                 'access_token' => $token,
@@ -189,8 +182,8 @@ class AuthController extends Controller
             ]);
         }
     }
-    protected function generateVerificationToken(): string
-    {
-    return Str::random(32);
+
+    protected function generateVerificationToken(): string{
+        return Str::random(32);
     }
 }
