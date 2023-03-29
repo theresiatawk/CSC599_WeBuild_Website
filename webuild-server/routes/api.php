@@ -9,6 +9,7 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\WarehouseOwnerController;
 use App\Http\Controllers\MaterialCategoryController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\EquipmentController;
 
 
 
@@ -55,6 +56,8 @@ Route::group([
     Route::post('material/update/{id}', [MaterialController::class, 'updateMaterial']);
     Route::delete('material/delete/{id}', [MaterialController::class, 'deleteMaterial']);
     Route::get('material/{warehouse_id}/{category_id}',[MaterialController::class, 'getMaterials']);
+
+    Route::post('equipment/add', [EquipmentController::class, 'addEquipmentWithGenerator']);
 
 
 });
