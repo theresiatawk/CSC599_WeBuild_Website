@@ -35,7 +35,7 @@ class MaterialController extends Controller
            $validate_img = Validator::make($request->all(), [
                'image' => 'mimes:jpeg,jpg,png'
            ]);
-           if($validate->fails()){
+           if($validate_img->fails()){
                return response()->json([
                    "error" => "Invalid file type."
                ]);
