@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Availability extends Model
 {
     use HasFactory;
+
+    public function item()
+    {
+        return $this->morphTo('item', ['equipment','service']);
+    }
 }

@@ -104,7 +104,7 @@ class MaterialCategoryController extends Controller
         }
         return response()->json([
             'message' => 'Available',
-            'Materials Categories' => $categories
+            'Categories' => $categories
         ]);  
     }
 }

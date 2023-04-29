@@ -19,20 +19,20 @@ class AuthController extends Controller
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()]);
         }
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Incorrect email or password'], 401);
+            return response()->json(['error' => 'Incorrect email or password']);
         }
         return $this->createNewToken($token);
     }
 
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|between:2,100|unique:users',
+            'username' => 'required|string|between:3,100|unique:users',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'phone_number' => 'required|numeric|min:8',
@@ -40,7 +40,7 @@ class AuthController extends Controller
             'user_type' => 'required|string|in:u,w'
         ]);
         if($validator->fails()){
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()]);
         }
         $user = new User;
         $user->username = $request->username;
@@ -73,13 +73,13 @@ class AuthController extends Controller
     public function editProfile(Request $request){
         $user_id = auth()->user()->id;
         $validator = Validator::make($request->all(), [
-            'username' => 'sometimes|string|between:2,100|unique:users,username,'.$user_id,
-            'email' => 'sometimes|string|email|max:100|unique:users,email,'.$user_id,
-            'phone_number' => 'sometimes|numeric|min:8',
-            'adress' => 'sometimes|string',
+            'username' => 'required|string|between:3,100|unique:users,username,'.$user_id,
+            'email' => 'required|string|email|max:100|unique:users,email,'.$user_id,
+            'phone_number' => 'required|numeric|min:8',
+            'adress' => 'required|string',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()]);
         }
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
@@ -88,45 +88,37 @@ class AuthController extends Controller
                 'error' => 'User not found. Invalid User Id.'
             ], 404);
         }
-        if($request->username){
-            $user->username = $request->username;
-        }
-        if($request->email){
-            $user->email = $request->email;
-        }
-        if($request->phone_number){
-            $user->phone_number = $request->phone_number;
-        }
-        if($request->adress){
-            $user->adress = $request->adress;
-        }
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->adress = $request->adress;
+
         if($user->save()){
             return response()->json([
-                'message' => 'User information updated successfully',
+                'message' => 'Information updated successfully',
                 'user' => $user,
             ], 201);
         }
     }
 
-    public function updatePassword(Request $request, $user){
+    public function updatePassword(Request $request){
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
             'new_password' => 'required|string|confirmed|min:8'
         ]);
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()]);
         }
-        $user = User::find($user);
+        $user = auth()->user();
         if (!password_verify($request->current_password, $user->password)) {
-            return response()->json(['error' => 'Current password is incorrect.'], 401);
+            return response()->json(['error' => 'Current password is incorrect.']);
         }
-
         $user->password = bcrypt($request->new_password);
         if($user->save()){
             return response()->json(['message' => 'Password updated successfully.'], 200);
         }
         else{
-            return response()->json(['error' => 'Failed to update password, try again later.'], 200);
+            return response()->json(['error' => 'Failed to update password, try again later.']);
         }
     }
 

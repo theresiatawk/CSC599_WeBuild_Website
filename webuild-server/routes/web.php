@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +24,11 @@ Route::get('/email/verify/{token}', 'Auth\VerificationController@verify')->name(
 
 Route::get('/', function () {
     return response()->json([
-        'meassage' => 'Welcome'
+        'redirection' => 'A redirection Happen'
     ], 200);
 });
-Route::get('/home', function () {
-    // throw new \Illuminate\Auth\Access\AuthorizationException('Email Verified');
-    return response()->json([
-        'message' => 'Email Verified'
-    ], 401);
-})->name('home');
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
 
 

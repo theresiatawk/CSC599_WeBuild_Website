@@ -10,8 +10,8 @@ use App\Http\Controllers\WarehouseOwnerController;
 use App\Http\Controllers\MaterialCategoryController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\EquipmentController;
-
-
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ReviewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +36,7 @@ Route::group([
     Route::get('user/w', [AuthController::class, 'getWarehouses']);
     Route::get('user/u', [AuthController::class, 'getUsers']);
 
-    Route::post('user/{user}/password', [AuthController::class, 'updatePassword']); 
+    Route::post('user/password/change', [AuthController::class, 'updatePassword']); 
     Route::post('user/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::get('/password/reset/{token}', function ($token) {
         return view('reset-password', ['token' => $token]);
@@ -58,6 +58,18 @@ Route::group([
     Route::get('material/{warehouse_id}/{category_id}',[MaterialController::class, 'getMaterials']);
 
     Route::post('equipment/add', [EquipmentController::class, 'addEquipmentWithGenerator']);
+    Route::post('equipment/update/{id}', [EquipmentController::class, 'updateEquipment']);
+    Route::delete('equipment/delete/{id}', [EquipmentController::class, 'deleteEquipment']);
+    Route::get('equipment/w/{warehouse_id}',[EquipmentController::class, 'getEquipments']);
+    Route::get('equipment/{id}',[EquipmentController::class, 'getEquipment']);
 
+    Route::post('service/add', [ServiceController::class, 'addServiceWithGenerator']);
+    Route::post('service/update/{id}', [ServiceController::class, 'updateService']);
+    Route::delete('service/delete/{id}', [ServiceController::class, 'deleteService']);
+    Route::get('service/w/{warehouse_id}',[ServiceController::class, 'getServices']);
+    Route::get('service/{id}',[ServiceController::class, 'getService']);
 
+    Route::post('reviews/add',[ReviewsController::class, 'addReview']);
+    Route::get('reviews/delete/{id}',[ReviewsController::class, 'deleteReview']);
+    Route::get('reviews/{warehouse_id}',[ReviewsController::class, 'getReviews']);
 });

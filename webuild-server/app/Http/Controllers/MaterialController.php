@@ -22,14 +22,14 @@ class MaterialController extends Controller
             'material_description' => 'required|string',
         ]);
         if($validator->fails()){
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()]);
         }
         $category = MaterialCategory::where("id", $request->category_id)
                                     ->first(); 
         if ($category === null) {
             return response()->json([
                 'error' => 'Category Material not found. Invalid Category id'
-            ], 404);
+            ]);
         }
         if ($request->hasFile('image')) {
             // Only allow .jpg, .jpeg and .png file types.
@@ -62,10 +62,13 @@ class MaterialController extends Controller
         else{
             return response()->json([
                 'error' => 'Failed to add the material',
-            ], 422);
+            ]);
         }
     }
     public function updateMaterial(Request $request, $id){
+        if(!$id){
+            return response()->json(['error' => 'The id is required to update a material']);
+        }
         $validator = Validator::make($request->all(), [
             'category_id' => 'sometimes|integer|max:100',
             'material_name' => 'sometimes|string|max:100',
@@ -74,13 +77,13 @@ class MaterialController extends Controller
             'material_description' => 'sometimes|string',
         ]);
         if($validator->fails()){
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()]);
         }
         $material = Material::find($id);
         if($material == null){
             return response()->json([
                 'error' => 'Material not found. Invalid Material Id.'
-            ], 404);
+            ]);
         }
         $warehouse_id = auth()->user()->id;
         // Checking if editing the logged in user material
@@ -88,14 +91,14 @@ class MaterialController extends Controller
                                     ->where('warehouse_id', $warehouse_id)
                                     ->first();
         if($accessed_material == null){
-            return response()->json(['error' => 'Unauthorized. Cannot edit this material'], 403);
+            return response()->json(['error' => 'Unauthorized. Cannot edit this material']);
         }
         if($request->category_id){
             $category = MaterialCategory::where('id', $request->category_id)->first();
             if ($category === null) {
                 return response()->json([
                     'error' => 'Category Material not found. Invalid Category id'
-                ], 404);
+                ]);
             }
             $material->category_id = $request->category_id;
         }
@@ -138,18 +141,17 @@ class MaterialController extends Controller
                 'material' => $material,
             ], 201);
         }
-
     }
     public function deleteMaterial($id){
         if(!$id){
-            return response()->json(['error' => 'The id is required to delete a material'], 422);
+            return response()->json(['error' => 'The id is required to delete a material']);
         }
         $material = Material::where("id", $id)
                                     ->first();    
         if ($material === null) {
             return response()->json([
                 'error' => 'Material not found'
-            ], 404);
+            ]);
         }
         $warehouse_id = auth()->user()->id;
         // Checking if editing the logged in user category
@@ -157,7 +159,7 @@ class MaterialController extends Controller
                                     ->where('warehouse_id', $warehouse_id)
                                     ->first();
         if($accessed_material == null){
-            return response()->json(['error' => 'Unauthorized. Cannot delete this material'], 403);
+            return response()->json(['error' => 'Unauthorized. Cannot delete this material']);
         }
         if($material->image_url !== 'images/WeBuild_Logo.png'){
             $path = 'public/materials/' . $material->image_url;
@@ -184,10 +186,10 @@ class MaterialController extends Controller
     }
     public function getMaterials($warehouse_id, $category_id){
         if(!$warehouse_id){
-            return response()->json(['error' => 'The warehouse id is required to fetch all materials'], 422);
+            return response()->json(['error' => 'The warehouse id is required to fetch all materials']);
         }
         if(!$category_id){
-            return response()->json(['error' => 'The category id is required to fetch all materials'], 422);
+            return response()->json(['error' => 'The category id is required to fetch all materials']);
         }
         $materials = Material::where("warehouse_id", $warehouse_id)
                             ->where("category_id", $category_id)
@@ -199,7 +201,7 @@ class MaterialController extends Controller
         }
         return response()->json([
             'message' => 'Available',
-            'Materials Categories' => $materials
+            'Materials' => $materials
         ]);  
     }
 }

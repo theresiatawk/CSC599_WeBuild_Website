@@ -37,7 +37,7 @@ class VerificationController extends Controller
 
         Auth::login($user);
 
-        return Redirect::to('/home');
+        return Redirect::to('/login');
     }
 
     public function resend()
