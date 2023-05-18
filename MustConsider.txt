@@ -1,3 +1,0 @@
-Things to consider: 
-1) Company user name validation (should not be a regular name)
-2) Validate the phone number
