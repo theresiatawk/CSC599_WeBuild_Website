@@ -15,11 +15,12 @@ class MaterialController extends Controller
     }
     public function addMaterial(Request $request){
         $validator = Validator::make($request->all(), [
-            'category_id' => 'required|integer|max:100',
+            'category_id' => 'required|integer',
             'material_name' => 'required|string|max:100',
-            'price_per_unit' => 'required|string|max:100',
-            'available_quantity' => 'required|integer|max:100',
+            'price_per_unit' => 'required|integer',
+            'available_quantity' => 'required|integer',
             'material_description' => 'required|string',
+            'image' => 'nullable|file|max:2048|mimes:jpeg,jpg,png',
         ]);
         if($validator->fails()){
             return response()->json(['error' => $validator->errors()]);
@@ -33,14 +34,14 @@ class MaterialController extends Controller
         }
         if ($request->hasFile('image')) {
             // Only allow .jpg, .jpeg and .png file types.
-           $validate_img = Validator::make($request->all(), [
-               'image' => 'mimes:jpeg,jpg,png'
-           ]);
-           if($validate_img->fails()){
-               return response()->json([
-                   "error" => "Invalid file type."
-               ]);
-           }
+        //    $validate_img = Validator::make($request->all(), [
+        //        'image' => 'mimes:jpeg,jpg,png|max:2048|mimes:jpeg,jpg,png|'
+        //    ]);
+        //    if($validate_img->fails()){
+        //        return response()->json([
+        //            "error" => "Invalid file type."
+        //        ]);
+        //    }
            $request->image->store('materials', 'public');
         }
         $material = new Material;
@@ -70,10 +71,10 @@ class MaterialController extends Controller
             return response()->json(['error' => 'The id is required to update a material']);
         }
         $validator = Validator::make($request->all(), [
-            'category_id' => 'sometimes|integer|max:100',
+            'category_id' => 'sometimes|integer',
             'material_name' => 'sometimes|string|max:100',
-            'price_per_unit' => 'sometimes|string|max:100',
-            'available_quantity' => 'sometimes|integer|max:100',
+            'price_per_unit' => 'sometimes|integer',
+            'available_quantity' => 'sometimes|integer',
             'material_description' => 'sometimes|string',
         ]);
         if($validator->fails()){
@@ -203,5 +204,19 @@ class MaterialController extends Controller
             'message' => 'Available',
             'Materials' => $materials
         ]);  
+    }
+    public function getMaterial($id){
+        if (!$id) {
+            return response()->json(['error' => 'The id is required to fetch a material']);
+        }
+        $material = Material::where('id', $id)->first();
+        if ($material === null) {
+            return response()->json([
+                'error' => 'Material not found'
+            ]);
+        }
+        return response()->json([
+            'message' => $material
+        ]);
     }
 }

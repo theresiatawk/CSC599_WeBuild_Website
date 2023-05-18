@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>WEBUILD</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+   <!-- Favicons -->
+   <link href="../assets/img/favicon.png" rel="icon">
+   <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+ 
+   <!-- Google Fonts -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+ 
+   <!-- Vendor CSS Files -->
+   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+   <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+   <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+   <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+   <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
+ 
+   <!-- Template Main CSS File -->
+   <link href="../assets/css/main.css" rel="stylesheet">
+   <link href="../assets/css/auth.css" rel="stylesheet">
+
+   
+ </head>
+ 
+ <body class="main-container">
+    <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="../assets/webuild-logo-white.png" alt="">
+      </a>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="./userHome.html">Warehouses</a></li>
+          <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li><a href="./profile.html">Edit Profile</a></li>
+              <li><a id = logout href="#">Logout</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+</header>
+  <main>
+  <div class="hilight"></div>
+      <!-- ======= Blog Section ======= -->
+      <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div id = "response"></div>
+          <!-- <div class="card-content">
+            <div class="card-content">
+            <div class="btn-group">
+              <a href = "#" id="all"class = "btn btnn btn1 active">All</a>
+              <a href = "#" id="completed" class = "btn btnn btn2">Completed</a>
+              <a href = "#" id="pending"class = "btn btnn btn2">Pending</a>
+              <a href = "#" id="canceled"class = "btn btnn btn2">Canceled</a>
+              <a href = "#" id="materials"class = "btn btnn btn2">Materials</a>
+              <a href = "#" id="services"class = "btn btnn btn2">Services</a>
+              <a href = "#" id="equipments"class = "btn btnn btn2">Equipments</a>
+          </div> -->
+          <!-- <section id="services" class="categories section-bg"> -->
+          <div id="all_orders"class="comments">  
+            <div class="reply-form position-relative">    
+                <div class="card-body padding">
+                    <div class="input">
+                      <ul>
+                        <li class="d-flex align-items-center">
+                            <span id="warehouse_name"><b>Warehouse Name:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="email" ><b>Email:</b></span>
+                        </li>  
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="phone_number" ><b>Phone Number:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="material_name"><b>Material Name:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="service_name" ><b>Service Name:</b></span>
+                        </li> 
+                        <br> 
+                        <li class="d-flex align-items-center">
+                            <span id="equipment_name" ><b>Equipment Name:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="price_per_unit"><b>Price Per Unit:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="price_per_hour" ><b>Price Per Hour:</b></span>
+                        </li>
+                        <br>  
+                        <li class="d-flex align-items-center">
+                            <span id="minimum_charge_per_hour" ><b>Minimum Charge Per Hour:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="quantity_ordered"><b>Quantity Ordered:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="date" ><b>Date:</b></span>
+                        </li> 
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="start_time" ><b>Start Time:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="end_time"><b>End Time:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="order_price" ><b>Order Price:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="longitude" ><b>Longitude:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="latitude" ><b>Latitude:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="location_desc" ><b>Location Description:</b></span>
+                        </li>       
+                      </ul>
+                    </div>
+                    <div class="dropdown1">
+                        <i class="bi bi-three-dots-vertical d1" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Cancel Order</a>
+                        </div>
+                      </div>`
+                </div> 
+            </div>
+            <br>  
+            <div class="reply-form position-relative">    
+                <div class="card-body padding">
+                    <div class="input">
+                      <ul>
+                        <li class="d-flex align-items-center">
+                            <span id="warehouse_name"><b>Warehouse Name:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="email" ><b>Email:</b></span>
+                        </li>  
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="phone_number" ><b>Phone Number:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="material_name"><b>Material Name:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="service_name" ><b>Service Name:</b></span>
+                        </li> 
+                        <br> 
+                        <li class="d-flex align-items-center">
+                            <span id="equipment_name" ><b>Equipment Name:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="price_per_unit"><b>Price Per Unit:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="price_per_hour" ><b>Price Per Hour:</b></span>
+                        </li>
+                        <br>  
+                        <li class="d-flex align-items-center">
+                            <span id="minimum_charge_per_hour" ><b>Minimum Charge Per Hour:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="quantity_ordered"><b>Quantity Ordered:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="date" ><b>Date:</b></span>
+                        </li> 
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="start_time" ><b>Start Time:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="end_time"><b>End Time:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="order_price" ><b>Order Price:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="longitude" ><b>Longitude:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="latitude" ><b>Latitude:</b></span>
+                        </li>
+                        <br>
+                        <li class="d-flex align-items-center">
+                            <span id="location_desc" ><b>Location Description:</b></span>
+                        </li>       
+                      </ul>
+                    </div>
+                    <div class="dropdown1">
+                        <i class="bi bi-three-dots-vertical d1" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Cancel Order</a>
+                        </div>
+                      </div>`
+                </div> 
+            </div>
+        </div>
+        </div>
+      </section>
+      <!-- End Blog Section -->
+</div>
+</div>
+</div>
+</div>
+  <footer class="fix-footer"></footer>
+</main>
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale-all.js"></script>
+
+    
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALQ1sP6cpr5ejOcSSHlcQc5cgV58pUcbo&libraries=places"></script>
+    <script src="../javascripts/page_script.js" type="text/javascript"></script>
+    <script>
+        webuild_pages.loadFor("my_orders");
+    </script>
+    <script>
+        const warehouseClickHandler = (w_id, w_name) => {
+          localStorage.setItem('warehouse_id',w_id);
+          localStorage.setItem('warehouse_name',w_name);
+          window.location.href = "./categories.html";
+        };
+    </script>
+</body>
+
+</html>

@@ -313,3 +313,424 @@ h5 {
   cursor: pointer;
   color: #dc3545;
 }
+#add-category-btn {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  color: #fff;
+  background-color: #081132;
+  border-color: #081132;
+  padding: 10px 24px;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
+
+#add-category-btn:hover {
+  background-color: #6e7799;
+  border-color: #6e7799;
+}
+.dropdown1 {
+  position: absolute;
+  font-size: 1.2rem;
+  margin-top: 5px;
+  margin-right: 5px;
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+  transition: 0.3s;
+}
+
+.d1 {
+  color: #081132;
+  padding-left: 160px;
+}
+.dropdown-menu .dropdown-item {
+  padding: 10px 10px;
+  font-size: 15px;
+  color: var(--color-default);
+  font-weight: 400;
+  }
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  color: #fff;
+  background-color: #081132;
+}
+.input-file {
+  display: none;
+}
+
+.input-label {
+  display: inline-block;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+  width: 100%;
+  text-align: center;
+}
+.image-preview {
+  display: none;
+  width: 100%;
+  height: 18rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+select#year {
+  background: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-down-b-512.png") no-repeat right;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-size: 15px 15px;
+  padding-right: 27px; /* Adjust padding to make room for arrow */
+}
+select#month {
+  background: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-down-b-512.png") no-repeat right;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-size: 15px 15px;
+  padding-right: 27px; /* Adjust padding to make room for arrow */
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 40px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px;
+  background-color: #ccc;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+input[type="range"]:hover {
+  background-color: #bbb;
+}
+
+input[type="range"]:active {
+  background-color: #081132;
+}
+.toggle-container input {
+  float: right;
+}
+.time-container{
+  display: none ;
+}
+.time-container div{
+  display: inline-block;
+  margin: 2%;
+}
+.time-container label {
+  display: inline-block;
+  width: 80px;
+  font-size: small;
+}
+
+.time-container input[type="time"] {
+  display: inline-block;
+  width: 80px;
+}
+input[type="time"] {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #f7f7f7;
+  color: #333;
+  font-size: 16px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  width: 150px;
+}
+.flatpickr-input {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #f7f7f7;
+  color: #333;
+  font-size: 16px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  width: 80px;
+}
+
+/* Customize the time picker popup */
+.flatpickr-calendar {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+}
+
+/* Customize the time picker buttons */
+.flatpickr-hour, .flatpickr-minute {
+  background-color: #f7f7f7;
+  color: #333;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+}
+
+/* Customize the time picker selected time */
+.flatpickr-time.selected {
+  background-color: #333;
+  color: #fff;
+}
+.flatpickr-hour.selected,
+  .flatpickr-minute.selected,
+  .flatpickr-am-pm.selected {
+    background-color: #081132 !important;
+    color: white !important;
+  }
+  .flatpickr-day.selected {
+    background-color: #081132 !important;
+    color: white !important;
+  }
+  .flatpickr-hour:focus,
+  .flatpickr-minute:focus,
+  .flatpickr-am-pm:focus {
+    background-color: #081132 !important;
+  }
+  .flatpickr-hour:focus,
+.flatpickr-minute:focus,
+.flatpickr-am-pm:focus,
+.flatpickr-hour.active,
+.flatpickr-minute.active,
+.flatpickr-am-pm.active {
+  background-color: #081132 !important;
+  color: white;
+}
+.post-img1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-img1 img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.meta-top1 ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+
+.meta-top1 li {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Add some spacing between the icon and text */
+}
+
+.meta-top1 li span {
+  margin-left: 5px; /* Add some spacing between the icon and text */
+  color: #081132;
+}
+.calendar-form {
+  align-items: center;
+  justify-content: center;
+}
+#calendar-container {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+#schedules-container {
+  width: 500px; 
+}
+#calendar {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.box {
+  width: 60px;
+  height: 30px;
+  border: 1px solid #081132;
+  display: inline-block;
+  margin: 1px;
+  cursor: pointer;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+.blue {
+  background-color: #d1d6ea;
+}
+.selected{
+  background-color: rgb(255, 238, 0);
+}
+.time-text {
+  font-size: 12px;
+  color: #081132;
+  margin-top: 3%;
+}
+.fc-day-number {
+  color: #081132;
+}
+
+.fc-day-header {
+  color: #081132;
+}
+.fc-highlight {
+  background-color: #d1d6ea; /* Set the desired background color */
+  opacity: 0.9; /* Set the desired opacity */
+}
+button {
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+#booking-details {
+  margin-top: 20px;
+  color: #081132;
+  display: none;
+}
+
+#booking-details h2 {
+  margin-bottom: 10px;
+  color: #081132;
+}
+#book-btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  color: #fff;
+  width: 100%;
+}
+#register:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  color: #fff;
+  width: 100%;
+}
+.decrease-btn,
+.increase-btn {
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  color: #fff;
+  background-color: #081132;
+  border-color: #081132;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
+
+.decrease-btn {
+  margin-right: 10px;
+  margin-left: 10px;
+
+}
+
+.increase-btn {
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
+
+.q-form {
+  flex: 1;
+  text-align: center;
+  width: 50px;
+
+}
+.map-form {
+  width: 50%;
+  margin-top: 10px;
+}
+.input1 {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+/* Optional: Add styling to the map itself */
+#map {
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ccc;
+  justify-content: center;
+}
+
+/* Optional: Customize the map controls */
+.gm-style .gm-fullscreen-control,
+.gm-style .gm-satellite-control,
+.gm-style .gm-street-view-control,
+.gm-style .gm-zoom-control {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  color: #333;
+}
+
+/* Optional: Customize the map marker */
+.gm-style .gm-marker {
+  color: #f00;
+  font-size: 20px;
+}
+
+/* Optional: Customize the info window */
+.gm-style .gm-info-window {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  width: 200px;
+}
+
+
+
+
+
+
+
+
+
+

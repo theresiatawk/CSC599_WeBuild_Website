@@ -56,12 +56,6 @@
 </header>
   <main>
   <div class="hilight"></div>
-  <!-- <br>
-  <br>
-  <br>
-  <br> -->
-  main id="main">
-
   <!-- ======= Breadcrumbs ======= -->
   <div id = "warehouse" class="breadcrumbs d-flex align-items-center" style="background-color:#253d93">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
@@ -76,6 +70,7 @@
   </div><!-- End Breadcrumbs -->
   <section id="services" class="categories section-bg">
     <div class="container" data-aos="fade-up">
+      <div id = "response"></div>
       <div id = "all_categories" class="row gy-4">
         <!-- End Service Item -->
         <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
@@ -83,14 +78,24 @@
             <div class="icon">
               <i class="fa-solid fa-trowel-bricks"></i>
             </div>
-            <h3>Nesciunt Mete</h3>
+            <h3>${category.name}</h3>
             <p></p>
             <p></p>
-            <a href="warehouseHome.html" class="readmore stretched-link"></a>
+            <a onclick = "categoriesClickHandler('${category.id}', '${category.name}')"href="#" class="readmore stretched-link"></a>
+            <li class="dropdown">
+              <i class="bi bi-three-dots-vertical d1" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
+              <ul>
+                <li><a href="./profile.html">Edit Profile</a></li>
+                <li><a id = logout href="#">Logout</a></li>
+              </ul>
+            </li>
           </div>
-        </div> -->
+          </div> -->
         <!-- End Service Item -->
       </div>
+      <!-- <div class="text-center mt-5">
+        <button id="add-category-btn" class="btn btn-primary">Add Category</button>
+      </div> -->
     </div>
   </section>
   <!-- End Services Section -->
@@ -116,6 +121,11 @@
         webuild_pages.loadFor("warehouse_home");
     </script>
     <script>
+      const warehouseClickHandler = (w_id, w_name) => {
+        localStorage.setItem('warehouse_id',w_id);
+        localStorage.setItem('warehouse_name',w_name);
+        window.location.href = "./categories.html";
+      };
       const categoriesClickHandler = (c_id, c_name) => {
         localStorage.setItem('category_id',c_id);
         localStorage.setItem('category_name',c_name);

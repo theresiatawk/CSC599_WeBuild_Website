@@ -25,10 +25,14 @@
    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
  
    <!-- Template Main CSS File -->
    <link href="../assets/css/main.css" rel="stylesheet">
    <link href="../assets/css/auth.css" rel="stylesheet">
+
+   
  </head>
  
  <body class="main-container">
@@ -56,19 +60,13 @@
 </header>
   <main>
   <div class="hilight"></div>
-  <!-- <br>
-  <br>
-  <br>
-  <br> -->
-  main id="main">
-
   <!-- ======= Breadcrumbs ======= -->
   <div id = "warehouse" class="breadcrumbs d-flex align-items-center" style="background-color:#253d93">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
       <h2 id = "warehouse_name">Warehouse Name</h2>
       <ol>
-        <li><a class="active" href="categories.html"><b>Materials</b></a></li>
-        <li><a href="services.html">Services</a></li>
+        <li><a href="categories.html"><b>Materials</b></a></li>
+        <li><a class="active" href="services.html">Services</a></li>
         <li><a href="equipments.html">Equipments</a></li>
         <li><a href="reviews.html">Reviews</a></li>
       </ol>
@@ -78,23 +76,73 @@
       <section id="blog" class="blog">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
           <div id = "response"></div>
-          <div id = "all_materials" class="row gy-4 posts-list">
-            <div class="col-xl-4 col-md-6">
-              <!-- <div class="post-item position-relative h-100">
-                <div class="post-img position-relative overflow-hidden">
-                  <img src="../assets/img/blog/blog-1.jpg" class="img-fluid" alt="">
+          <div class="row g-5">  
+              <article class="blog-details">
+                <div class="post-img1">
+                  <img src="../../webuild-server/public/images/WeBuild_Logo.png" alt="" class="img-fluid">
                 </div>
-                <div class="post-content d-flex flex-column">
-                  <h3 class="post-title">Material Name</h3>
-                  <p><b>Price <span>:</span></b> 200$ per meter </p>
-                  <p class="post-description">Here is the space where the warehouse owner is free to decribe their material.</p>
-                  <hr>
-                  <a href="blog-details.html" class="readmore stretched-link"><span>Order</span><i class="bi bi-arrow-right"></i></a>
+  
+                <h2 id = service-name class="card-title"></h2>
+                <div class="meta-top1">
+                  <ul>
+                    <li class="d-flex align-items-center">
+                        <i class="bi bi-person"></i>
+                        <span>Minimum charge per hour:</span>
+                    </li>
+                    <li class="d-flex align-items-center">
+                        <i class="bi bi-clock"></i>
+                        <span id="charge" ></span>
+                    </li>  
+                  </ul>
                 </div>
-              </div>
-            </div> -->
-            <!-- End post list item -->
-          </div><!-- End blog posts list -->
+  
+                <div class="content">
+                  <blockquote>
+                    <p id = "description">
+                    </p>
+                  </blockquote>  
+                </div>
+                <div id="calendar-part"class="comments">  
+                    <div class="reply-form">                  
+                        <div class="row calendar-form">
+                            <div class = "col-md-6 form-group" id="schedules-container">
+                                <div id="schedules"></div>
+                            </div>
+                            <h2 id = booking-date class="card-title"></h2>
+                            <div class = "col-md-6 form-group" id="calendar-container">
+                                <div id="calendar"></div> 
+                            </div>
+                            <div id="booking-details">
+                                <p><b>Time:</b><span id="booking-time"></span></p>
+                            </div>
+                            <label id = "booking_f" class="feedback-text"><b></b></label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="input">
+                    <label class="form-label" for="email">Specify your location by click on the map to move the Red marker to the delivery location:</label>
+                    <input id="search-input" class="form-control map-form" type="text" placeholder="Search for a location">
+                    <br>
+                    <div id="map"></div>
+                </div>
+                <div class="input">
+                    <label class="form-label" for="email">Location details:</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="location_desc"
+                      name="c_name"
+                      required
+                    />
+                    <label id = "location_desc_f" class="feedback-text"><b></b></label>
+                </div>
+                <button id="book-btn" type="submit" class="btn book-btn">Book Service</button>
+              </article>
+                <!-- End blog comments -->
+              <div id = "response2"></div>
+            </div>
+          </div>
         </div>
       </section>
       <!-- End Blog Section -->
@@ -112,12 +160,20 @@
     <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="../assets/vendor/php-email-form/validate.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale-all.js"></script>
+
+    
+
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALQ1sP6cpr5ejOcSSHlcQc5cgV58pUcbo&libraries=places"></script>
     <script src="../javascripts/page_script.js" type="text/javascript"></script>
     <script>
-        webuild_pages.loadFor("materials");
+        webuild_pages.loadFor("service_availability");
     </script>
     <script>
         const warehouseClickHandler = (w_id, w_name) => {

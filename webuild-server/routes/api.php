@@ -11,6 +11,7 @@ use App\Http\Controllers\MaterialCategoryController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewsController;
 
 /*
@@ -48,28 +49,53 @@ Route::group([
     Route::get('user/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
     
     Route::post('category/add', [MaterialCategoryController::class, 'addMaterialCategory']);
-    Route::put('category/update/{name}/{newName}', [MaterialCategoryController::class, 'updateMaterialCategory']);
-    Route::delete('category/delete/{id}', [MaterialCategoryController::class, 'deleteMaterialCategory']);
+    Route::post('category/update/{id}', [MaterialCategoryController::class, 'updateMaterialCategory']);
+    Route::get('category/delete/{id}', [MaterialCategoryController::class, 'deleteMaterialCategory']);
     Route::get('category/{warehouse_id}',[MaterialCategoryController::class, 'getMaterialsCategories']);
+    Route::get('category/one/{id}',[MaterialCategoryController::class, 'getCategory']);
 
     Route::post('material/add', [MaterialController::class, 'addMaterial']);
     Route::post('material/update/{id}', [MaterialController::class, 'updateMaterial']);
-    Route::delete('material/delete/{id}', [MaterialController::class, 'deleteMaterial']);
+    Route::get('material/delete/{id}', [MaterialController::class, 'deleteMaterial']);
+    Route::get('material/one/{id}',[MaterialController::class, 'getMaterial']);
     Route::get('material/{warehouse_id}/{category_id}',[MaterialController::class, 'getMaterials']);
 
     Route::post('equipment/add', [EquipmentController::class, 'addEquipmentWithGenerator']);
     Route::post('equipment/update/{id}', [EquipmentController::class, 'updateEquipment']);
-    Route::delete('equipment/delete/{id}', [EquipmentController::class, 'deleteEquipment']);
+    Route::get('equipment/delete/{id}', [EquipmentController::class, 'deleteEquipment']);
     Route::get('equipment/w/{warehouse_id}',[EquipmentController::class, 'getEquipments']);
     Route::get('equipment/{id}',[EquipmentController::class, 'getEquipment']);
 
     Route::post('service/add', [ServiceController::class, 'addServiceWithGenerator']);
     Route::post('service/update/{id}', [ServiceController::class, 'updateService']);
-    Route::delete('service/delete/{id}', [ServiceController::class, 'deleteService']);
+    Route::get('service/delete/{id}', [ServiceController::class, 'deleteService']);
     Route::get('service/w/{warehouse_id}',[ServiceController::class, 'getServices']);
     Route::get('service/{id}',[ServiceController::class, 'getService']);
+
+    Route::post('order/material', [OrderController::class, 'orderMaterial']);
+    Route::post('order/service', [OrderController::class, 'orderService']);
+    Route::post('order/equipment', [OrderController::class, 'orderEquipment']);
+    Route::post('order/get/date/item', [OrderController::class, 'getOrdersForWarehouseForDate']);
+    Route::get('order/get/w', [OrderController::class, 'getOrdersForWarehouse']);
+    Route::get('order/get/w/canceled', [OrderController::class, 'getOrdersForWarehouseCanceled']);
+    Route::get('order/get/w/pending', [OrderController::class, 'getOrdersForWarehousePending']);
+    Route::get('order/get/w/completed', [OrderController::class, 'getOrdersForWarehouseComplete']);
+    Route::get('order/get/w/material', [OrderController::class, 'getOrdersForWarehouseMaterial']);
+    Route::get('order/get/w/service', [OrderController::class, 'getOrdersForWarehouseService']);
+    Route::get('order/get/w/equipment', [OrderController::class, 'getOrdersForWarehouseEquipment']);
+    Route::get('order/get/u', [OrderController::class, 'getOrdersForUser']);
+    Route::get('order/get/u/canceled', [OrderController::class, 'getOrdersForUserCanceled']);
+    Route::get('order/get/u/pending', [OrderController::class, 'getOrdersForUserPending']);
+    Route::get('order/get/u/completed', [OrderController::class, 'getOrdersForUserComplete']);
+    Route::get('order/get/u/material', [OrderController::class, 'getOrdersForUserMaterial']);
+    Route::get('order/get/u/service', [OrderController::class, 'getOrdersForUserService']);
+    Route::get('order/get/u/equipment', [OrderController::class, 'getOrdersForUserEquipment']);
+    Route::post('order/change/{order_id}/{status}', [OrderController::class, 'changeOrderStatus']);
+    Route::post('order/delete/{order_id}', [OrderController::class, 'deleteOrder']);
 
     Route::post('reviews/add',[ReviewsController::class, 'addReview']);
     Route::get('reviews/delete/{id}',[ReviewsController::class, 'deleteReview']);
     Route::get('reviews/{warehouse_id}',[ReviewsController::class, 'getReviews']);
+
+
 });

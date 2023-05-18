@@ -181,7 +181,7 @@ section {
 }
 
 .scroll-top:hover {
-  background: #201362;
+  background: #6e7799;
   color: #fff;
 }
 
@@ -1981,7 +1981,7 @@ section {
 
 .hero .info .btn-get-started:hover {
   background: var(--color-primary);
-  color:#201362
+  color:#6e7799
 }
 
 .hero .carousel-control-prev {

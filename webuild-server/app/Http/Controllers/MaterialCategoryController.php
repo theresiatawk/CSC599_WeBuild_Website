@@ -17,7 +17,7 @@ class MaterialCategoryController extends Controller
             'category_name' => 'required|string|max:100',
         ]);
         if($validator->fails()){
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()]);
         }
         $category = new MaterialCategory;
         $user_id = auth()->user()->id;
@@ -26,28 +26,30 @@ class MaterialCategoryController extends Controller
         if($category->save()){
             return response()->json([
                 'message' => 'Category successfully added',
-            ], 201);
+            ]);
         }
         else{
             return response()->json([
                 'error' => 'Failed to add the category',
-            ], 422);
+            ]);
         }
     }
-    public function updateMaterialCategory($id, $newName){
+    public function updateMaterialCategory(Request $request, $id){
         if (!$id) {
             return response()->json(['error' => 'The id is required to update a category'], 422);
         }
 
-        if (!$newName) {
-            return response()->json(['error' => 'The new name is required to update a category'], 422);
+        $validator = Validator::make($request->all(), [
+            'category_name' => 'required|string|max:100',
+        ]);
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()]);
         }
-
         $category = MaterialCategory::where('id', $id)->first();
         if ($category === null) {
             return response()->json([
                 'error' => 'Category material not found'
-            ], 404);
+            ]);
         }
         $warehouse_id = auth()->user()->id;
         // Checking if editing the logged in user category
@@ -55,10 +57,10 @@ class MaterialCategoryController extends Controller
                                     ->where('warehouse_id', $warehouse_id)
                                     ->first();
         if($accessed_category == null){
-            return response()->json(['error' => 'Unauthorized. Cannot edit this category'], 403);
+            return response()->json(['error' => 'Unauthorized. Cannot edit this category']);
         }
         // Update the name of the category in the `material_categories` table
-        $category->name = $newName;
+        $category->name = $request->category_name;
         $category->save();
 
         return response()->json([
@@ -106,6 +108,20 @@ class MaterialCategoryController extends Controller
             'message' => 'Available',
             'Categories' => $categories
         ]);  
+    }
+    public function getCategory($id){
+        if (!$id) {
+            return response()->json(['error' => 'The id is required to fetch a category']);
+        }
+        $category = MaterialCategory::where('id', $id)->first();
+        if ($category === null) {
+            return response()->json([
+                'error' => 'Category material not found'
+            ]);
+        }
+        return response()->json([
+            'message' => $category
+        ]);
     }
 }
 

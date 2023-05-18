@@ -19,7 +19,7 @@ class ServiceController extends Controller
         $data = $request->all();
         $validator = Validator::make($request->all(), [
             'service_name' => 'required|string|max:100',
-            'price_per_hour' => 'required|string|max:100',
+            'minimum_charge_per_hour' => 'required|integer',
             'service_description' => 'required|string',
             'year' => 'required|integer|between:1970,2030',
             'month' => 'required|integer|between:1,12',
@@ -64,7 +64,7 @@ class ServiceController extends Controller
         $user_id = auth()->user()->id;
         $service->warehouse_id = $user_id;
         $service->name = $request->service_name;
-        $service->price_per_hour = $request->price_per_hour;
+        $service->minimum_charge_per_hour = $request->minimum_charge_per_hour;
         $service->description = $request->service_description;
         if($request->image){
             $service->image_url = $request->image->hashName();
@@ -104,7 +104,7 @@ class ServiceController extends Controller
         $data = $request->all();
         $validator = Validator::make($request->all(), [
             'service_name' => 'required|string|max:100',
-            'price_per_hour' => 'required|string|max:100',
+            'minimum_charge_per_hour' => 'required|integer',
             'service_description' => 'required|string',
             'year' => 'required|integer|between:1970,2030',
             'month' => 'required|integer|between:1,12',
@@ -166,7 +166,7 @@ class ServiceController extends Controller
             }
         }
         $service->name = $request->service_name;
-        $service->price_per_hour = $request->price_per_hour;
+        $service->minimum_charge_per_hour = $request->minimum_charge_per_hour;
         $service->description = $request->service_description;
         if($request->image){
             $service->image_url = $request->image->hashName();
@@ -287,14 +287,16 @@ class ServiceController extends Controller
         $service_availability = Availability::where('type', 'service')
                                             ->where('item_id', $id)
                                             ->get();
-        $services = DB::table('service')
+        $availability = DB::table('services')
                     ->join('availabilities', 'services.id', '=', 'availabilities.item_id')
-                    ->select('services.*','availabilities.*')
+                    ->where('availabilities.type', '=', 'service')
                     ->where('services.id','=',$id)
+                    ->select('services.*','availabilities.*')
                     ->get();
         return response()->json([
             'message' => 'Available',
-            'Sevices' => $services
+            'service' => $service,
+            'availability' => $availability
         ]);
 
     }

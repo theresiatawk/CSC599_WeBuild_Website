@@ -19,7 +19,7 @@ class EquipmentController extends Controller
         $data = $request->all();
         $validator = Validator::make($request->all(), [
             'equipment_name' => 'required|string|max:100',
-            'price_per_hour' => 'required|string|max:100',
+            'price_per_hour' => 'required|integer',
             'equipment_description' => 'required|string',
             'year' => 'required|integer|between:1970,2030',
             'month' => 'required|integer|between:1,12',
@@ -103,7 +103,7 @@ class EquipmentController extends Controller
         $data = $request->all();
         $validator = Validator::make($request->all(), [
             'equipment_name' => 'required|string|max:100',
-            'price_per_hour' => 'required|string|max:100',
+            'price_per_hour' => 'required|integer',
             'equipment_description' => 'required|string',
             'year' => 'required|integer|between:1970,2030',
             'month' => 'required|integer|between:1,12',
@@ -283,10 +283,10 @@ class EquipmentController extends Controller
         if($equipment == null){
             return response()->json(['error' => 'This equipment is not found.']);
         }
-        // $equipment_availability = Availability::where('type', 'equipment')
-        //                                     ->where('item_id', $id)
-        //                                     ->get();
-        $equipment = DB::table('equipment')
+        $equipment_availability = Availability::where('type', 'equipment')
+                                            ->where('item_id', $id)
+                                            ->get();
+        $availability = DB::table('equipment')
                     ->join('availabilities', 'equipment.id', '=', 'availabilities.item_id')
                     ->where('availabilities.type', '=', 'equipment')
                     ->where('equipment.id','=',$id)
@@ -294,7 +294,33 @@ class EquipmentController extends Controller
                     ->get();
         return response()->json([
             'message' => 'Available',
-            'Equipments' => $equipment,
+            'equipment' => $equipment,
+            'availability' => $availability
+        ]);
+
+    }
+    public function getService($id){
+        if(!$id){
+            return response()->json(['error' => 'The id is required to fetch a service.']);
+        }
+        $service = Service::where("id", $id)
+                            ->first();
+        if($service == null){
+            return response()->json(['error' => 'This service is not found.']);
+        }
+        $service_availability = Availability::where('type', 'service')
+                                            ->where('item_id', $id)
+                                            ->get();
+        $availability = DB::table('services')
+                    ->join('availabilities', 'services.id', '=', 'availabilities.item_id')
+                    ->where('availabilities.type', '=', 'service')
+                    ->where('services.id','=',$id)
+                    ->select('services.*','availabilities.*')
+                    ->get();
+        return response()->json([
+            'message' => 'Available',
+            'service' => $service,
+            'availability' => $availability
         ]);
 
     }
